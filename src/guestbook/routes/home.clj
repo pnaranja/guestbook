@@ -6,7 +6,8 @@
 
 
 (defn show-guests []
-  "Reads db and then creates a list of the message, name and timestamp"
+  "Reads db and then creates a list of the message, name and timestamp.
+  The ':keys' directive allows you to bind same named symbols to map keys"
   [:ul.guests
    (for [{:keys [message name timestamp]} (db/read-guests)]
          [:li
