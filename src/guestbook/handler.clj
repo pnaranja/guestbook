@@ -6,6 +6,7 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [guestbook.routes.home :refer [home-routes]]
+            [guestbook.routes.auth :refer [auth-routes]]
             [guestbook.models.db :refer [create-guestbook-table]]))
 
 (defn init []
@@ -26,6 +27,6 @@
 (def app
   "Referenced with the ring key handler in the project.clj.  Put app-routes last because of 
   the not-found route, which can prevent the home-routes from being processed."
-  (-> (routes home-routes app-routes)
+  (-> (routes auth-routes home-routes app-routes)
       (handler/site)
       (wrap-base-url)))

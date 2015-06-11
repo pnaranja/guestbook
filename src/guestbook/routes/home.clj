@@ -32,7 +32,7 @@
                           [:p "Name:"]
                           (text-field "name" name)
                           [:p "Message:"]
-                          (text-area {:rows 40, :cols 40} "message" message)
+                          (text-area {:rows 10, :cols 40} "message" message)
                           [:br]
                           (submit-button "comment"))))
 
@@ -51,6 +51,6 @@
 
 
 (defroutes home-routes
-  "If GET, call home function.  If POST, call save-message"
+  "If GET, call home function.  If POST, takes name and message from the home form calls save-message"
   (GET "/" [] (home))
   (POST "/" [name message] (save-message name message)))
