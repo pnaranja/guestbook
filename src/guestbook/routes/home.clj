@@ -2,7 +2,9 @@
   (:require [compojure.core :refer :all]
             [guestbook.views.layout :as layout]
             [hiccup.form :refer :all]
-            [guestbook.models.db :as db]))
+            [guestbook.models.db :as db]
+            [noir.session :as session]
+            ))
 
 
 (defn show-guests []
@@ -17,7 +19,8 @@
 
 (defn home [& [name message error]]
   "Called on the GET to create the guestbook page"
-  (layout/common [:h1 "Guestbook"]
+  (layout/common [:h1 "Guestbook " (session/get :user)]
+                 [:h2 [:a {:href "/logout"} "logout"]]
                  [:p "Welcome to my guestbook"]
                  [:p error]
 
@@ -53,4 +56,5 @@
 (defroutes home-routes
   "If GET, call home function.  If POST, takes name and message from the home form calls save-message"
   (GET "/" [] (home))
-  (POST "/" [name message] (save-message name message)))
+  (POST "/" [name message] (save-message name message))
+  )

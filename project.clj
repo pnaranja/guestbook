@@ -14,7 +14,10 @@
   :plugins [[lein-ring "0.9.4"]]
   :ring {:handler guestbook.handler/app
          :init guestbook.handler/init
-         :destroy guestbook.handler/destroy}
+         :destroy guestbook.handler/destroy
+         :browser-uri "/login"
+         :auto-refresh? true
+         }
   :profiles
   {:uberjar {:aot :all}
    :production

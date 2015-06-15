@@ -7,7 +7,9 @@
             [compojure.route :as route]
             [guestbook.routes.home :refer [home-routes]]
             [guestbook.routes.auth :refer [auth-routes]]
-            [guestbook.models.db :refer [create-guestbook-table]]))
+            [guestbook.models.db :refer [create-guestbook-table]]
+            [noir.session :as session]
+            [ring.middleware.session.memory :refer [memory-store]]))
 
 (defn init []
   "Referenced with the ring key init in the project.clj"
@@ -26,7 +28,7 @@
 
 (def app
   "Referenced with the ring key handler in the project.clj.  Put app-routes last because of 
-  the not-found route, which can prevent the home-routes from being processed."
-  (-> (routes auth-routes home-routes app-routes)
-      (handler/site)
-      (wrap-base-url)))
+  the not-found route, which can prevent the home-routes from being processed.
+  Also store user sessions in memory."
+  (-> (handler/site (routes auth-routes home-routes app-routes))
+      (session/wrap-noir-session {:store (memory-store)})))
