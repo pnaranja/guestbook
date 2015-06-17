@@ -9,6 +9,7 @@
             [guestbook.routes.auth :refer [auth-routes]]
             [guestbook.models.db :refer [create-guestbook-table]]
             [noir.session :as session]
+            [noir.validation :refer [wrap-noir-validation]]
             [ring.middleware.session.memory :refer [memory-store]]))
 
 (defn init []
@@ -31,4 +32,5 @@
   the not-found route, which can prevent the home-routes from being processed.
   Also store user sessions in memory."
   (-> (handler/site (routes auth-routes home-routes app-routes))
-      (session/wrap-noir-session {:store (memory-store)})))
+      (session/wrap-noir-session {:store (memory-store)})
+      (wrap-noir-validation)))

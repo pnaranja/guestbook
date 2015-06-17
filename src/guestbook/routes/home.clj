@@ -19,8 +19,8 @@
 
 (defn home [& [name message error]]
   "Called on the GET to create the guestbook page"
-  (layout/common [:h1 "Guestbook " (session/get :user)]
-                 [:h2 [:a {:href "/logout"} "logout"]]
+  (layout/common [:h1 "Guestbook"]
+                 [:h2  "Logged in as " (if (nil? (session/get :user)) "?" (session/get :user)) [:br] [:a {:href "/logout"} "logout"]]
                  [:p "Welcome to my guestbook"]
                  [:p error]
 
