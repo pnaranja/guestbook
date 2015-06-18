@@ -17,23 +17,24 @@
 (defn registration-page []
   (layout/common
     (form-to [:post "/register"]
-      (control text-field "id" "Screen-name")
-      (control password-field "pass" "Password")
-      (control password-field "pass1" "Retype-password")
-      (submit-button "Create Account"))
-    )
-  )
+        (control text-field "id" "Screen-name")
+        (control password-field "pass" "Password")
+        (control password-field "pass1" "Retype-password")
+        (submit-button "Create Account"))
+    ))
 
 
-(defn login-page [& [error]]
-  (layout/common
-   (if error [:div.error "Login error: " error])
-    (form-to [:post "/login"]
-      (control text-field :id "screen-name")
-      (control password-field :pass "password")
-      (submit-button "login"))
+  (defn login-page [& [error]]
+    (layout/common
+     (if error [:p 
+                [:div.error "Login error: " error]])
+     (form-to [:post "/login"]
+              [:p.login
+               (control text-field :id "screen-name")
+               (control password-field :pass "password")
+               (submit-button "login")])
+     )
     )
-  )
 
 (defn handle-login [id pass]
 "Rule validator will execute code if conditional is false"
@@ -74,8 +75,6 @@
   (POST "/login" [id pass]
         (handle-login id pass))
   (GET "/logout" [] 
-       (layout/common 
-         (form-to [:post "/logout"] (submit-button "logout"))))
-  (POST "/logout" []
-        (session/clear!) (redirect "/"))
+        ;; (layout/common (form-to [:post "/logout"] (submit-button "logout")))
+        (session/clear!) (redirect "/login"))
   )
