@@ -19,13 +19,13 @@
 
 (defn home [& [name message error]]
   "Called on the GET to create the guestbook page"
-  (layout/common [:h1 "Guestbook"]
+  (layout/common [:h1.home "The Guestbook"]
                  [:h2  "Logged in as " (if (nil? (session/get :user)) "?" (session/get :user)) [:br] [:a {:href "/logout"} "logout"]]
                  [:p "Welcome to my guestbook"]
                  [:p error]
 
                  ;Generate list of existing comments
-                 (show-guests)
+                 [:div.show-guests (show-guests)]
                  [:hr]
 
                  ;Create form with text fields "name" and "message"
