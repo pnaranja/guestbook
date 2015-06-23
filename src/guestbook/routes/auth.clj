@@ -24,17 +24,31 @@
     ))
 
 
+  ;; (defn login-page [& [error]]
+  ;;   (layout/common
+  ;;    (if error [:p 
+  ;;               [:div.error "Login error: " error]])
+  ;;    (form-to [:post "/login"]
+  ;;             [:p.login
+  ;;              (control text-field :id "screen-name")
+  ;;              (control password-field :pass "password")
+  ;;              (submit-button "login")])
+  ;;    )
+  ;;   )
+
   (defn login-page [& [error]]
     (layout/common
      (if error [:p 
                 [:div.error "Login error: " error]])
      (form-to [:post "/login"]
-              [:p.login
-               (control text-field :id "screen-name")
-               (control password-field :pass "password")
-               (submit-button "login")])
+               [:div.center-block
+                [:p.login
+                 (control text-field :id "screen-name")
+                 (control password-field :pass "password")
+                 (submit-button "login")]])
      )
     )
+    
 
 (defn handle-login [id pass]
 "Rule validator will execute code if conditional is false"
