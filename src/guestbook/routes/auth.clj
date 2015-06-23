@@ -29,26 +29,28 @@
   ;;    (if error [:p 
   ;;               [:div.error "Login error: " error]])
   ;;    (form-to [:post "/login"]
-  ;;             [:p.login
-  ;;              (control text-field :id "screen-name")
-  ;;              (control password-field :pass "password")
-  ;;              (submit-button "login")])
+  ;;              [:div.login
+  ;;               (control text-field :id "screen-name")
+  ;;               (control password-field :pass "password")
+  ;;               [:input {:type "submit" :style "visibility:hidden"}]])
   ;;    )
   ;;   )
+
 
   (defn login-page [& [error]]
     (layout/common
      (if error [:p 
                 [:div.error "Login error: " error]])
-     (form-to [:post "/login"]
-               [:div.center-block
-                [:p.login
-                 (control text-field :id "screen-name")
-                 (control password-field :pass "password")
-                 (submit-button "login")]])
-     )
-    )
-    
+     [:div.container
+      [:form.form-signin {:method "POST" :action "/login"}
+       [:h2.form-signin-heading "Please sign in"]
+       [:label {:for "inputText" :class "sr-only"}]
+       [:input {:type "text" :class "form-control" :id "inputText" :placeholder "Username"}]
+       [:label {:for "inputPassword" :class "sr-only"}]
+       [:input {:type "password" :class "form-control" :id "inputPassword" :placeholder "Password"}]
+       [:button {:class "btn btn-lg btn-primary btn-block" :type "submit"} "Login"]]]
+     ))
+
 
 (defn handle-login [id pass]
 "Rule validator will execute code if conditional is false"
@@ -56,7 +58,7 @@
   (rule (= id "foo") [:id "unknown user"])
   (rule (has-value? pass) [:id "password is required"])
   (rule (= pass "bar") [:pass "invalid password"])
-  (if (errors? :id :pass) (login-page "Problem with login")
+  (if (errors? :id :pass) (login-page "Problem with Login or Password")
    (do
      (session/put! :user :id)
      (redirect "/")))

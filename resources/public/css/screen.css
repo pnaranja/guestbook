@@ -15,11 +15,6 @@ h1.home {
 }
 
 
-h2 {
-    text-align: right;
-    font-size: 10px
-}
-
 div.show_guests{
     font-size: 12px
 }
@@ -28,7 +23,7 @@ div.error{
     color: red
 }
 
-p.login{
+div.login{
     font-family: Arial;
     font-size: 30;
     margin: 0;
@@ -39,5 +34,9 @@ p.login{
     transform: translate(-50%,-50%)
 }
 
-
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
 
